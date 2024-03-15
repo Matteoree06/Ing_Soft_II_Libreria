@@ -8,6 +8,10 @@
         <servlet-name>Controlador</servlet-name>
         <servlet-class>Aplicacion.Controlador</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ControladorIMG</servlet-name>
+        <servlet-class>Aplicacion.ControladorIMG</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Conexion1</servlet-name>
         <url-pattern>/Conexion1</url-pattern>
@@ -15,6 +19,10 @@
     <servlet-mapping>
         <servlet-name>Controlador</servlet-name>
         <url-pattern>/Controlador</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ControladorIMG</servlet-name>
+        <url-pattern>/ControladorIMG</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

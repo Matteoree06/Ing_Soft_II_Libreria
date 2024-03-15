@@ -31,9 +31,8 @@
           <li class="nav-item">
               <a class="nav-link" href="#">Ofertas</a>
           </li>
-        
           <li class="nav-item">
-              <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Carrito</a>
+              <a class="nav-link" href="Controlador?accion=Carrito"><i class="fas fa-cart-plus">(<label style="color: darkorange">${contador}</label>)</i>Carrito</a>
           </li>
       </ul>
       <form class="form-inline my-2 my-lg-0">
@@ -64,37 +63,20 @@
                                 <label>${p.getNombres()}</label>
                             </div>
                             <div class="card-body">
-                                <i>$56.00</i>
-                                <img src="" width="200" height="180">
+                                <i>$.${p.getPrecio()}</i>
+                                <img src="ControladorIMG?id=${p.getId()}" width="200" height="180">
                             </div>    
                             <div class="card-footer" text-center>
-                                <label>Descripción Producto</label>
+                                <label>${p.getDescripcion()}</label>
                                 <div>
-                                    <a href="" class="btn btn-outline-info">Agregar Carrito</a>
+                                    <a href="Controlador?accion=AgregarCarrito&id=${p.getId()}" class="btn btn-outline-info">Agregar Carrito</a>
                                     <a class="btn btn-danger">Comprar</a>
                                 </div>
                             </div>    
                         </div>
                     </div>
                 </c:forEach>
-                                    <div class="col-sm-4">
-                        <div class="card">
-                            <div class="card-header">
-                                <label>${p.getNombres()}</label>
-                            </div>
-                            <div class="card-body">
-                                <i>$56.00</i>
-                                <img src="" width="200" height="180">
-                            </div>    
-                            <div class="card-footer" text-center>
-                                <label>Descripción Producto</label>
-                                <div>
-                                    <a href="" class="btn btn-outline-info">Agregar Carrito</a>
-                                    <a class="btn btn-danger">Comprar</a>
-                                </div>
-                            </div>    
-                        </div>
-                    </div>
+
             </div>
         </div>
         
