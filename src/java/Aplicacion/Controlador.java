@@ -5,9 +5,13 @@
  */
 package Aplicacion;
 
+import DAO.CompraDAO;
 import Datos.Carrito;
 import Datos.Producto;
-import Datos.ProductoDAO;
+import DAO.ProductoDAO;
+import Datos.Cliente;
+import Datos.Compra;
+import Datos.Pago;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -134,6 +138,18 @@ public class Controlador extends HttpServlet {
                 request.setAttribute("totalPagar", totalPagar);
                 request.getRequestDispatcher("carrito.jsp").forward(request, response);
                 break;
+             case "GenerarCompra":
+                 Cliente cliente=new Cliente();
+                 cliente.setId(12);
+                 CompraDAO dao=new CompraDAO();
+                 Compra compra=new Compra(cliente, 19, Fecha.FechaBD(), totalPagar, "Cancelado", listaCarrito);
+                 int res=dao.GenerarCompra(compra);
+                 if(res!=0&&totalPagar>0){
+                    request.getRequestDispatcher("mensaje.jsp").forward(request, response);
+                 }else{
+                     request.getRequestDispatcher("error.jsp").forward(request, response);
+                 }
+                 break;
             default:
             request.setAttribute("productos", productos);
             request.getRequestDispatcher("index.jsp").forward(request, response);

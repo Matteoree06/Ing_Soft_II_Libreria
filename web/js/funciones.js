@@ -25,7 +25,7 @@ $(document).ready(function () {
                     }
                 }).then((willDelete)=>{
                     if(willDelete){
-                        parent.location.href="Controlador?accion=carrito";
+                        parent.location.href="Controlador?accion=Carrito";
                     }
                 });
     });
