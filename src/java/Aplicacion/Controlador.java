@@ -5,6 +5,7 @@
  */
 package Aplicacion;
 
+import Datos.Carrito;
 import Datos.Producto;
 import Datos.ProductoDAO;
 import java.io.IOException;
@@ -23,14 +24,43 @@ import javax.servlet.http.HttpServletResponse;
 public class Controlador extends HttpServlet {
 
     ProductoDAO pdao=new ProductoDAO();
+    Producto p=new Producto();
     List<Producto> productos=new ArrayList();
+    
+    List<Carrito> listaCarrito=new ArrayList();
+    int item;
+    double totalPagar=0.0;
+    int cantidad=1;
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String accion=request.getParameter("accion");
         productos=pdao.listar();
         switch(accion){
-            case "ejemplo":
-                
+            case "AgregarCarrito":
+                int idp=Integer.parseInt(request.getParameter("id"));
+                p=pdao.listarId(idp);
+                item=item+1;
+                Carrito car=new Carrito();
+                car.setItem(item);
+                car.setIdProducto(p.getId());
+                car.setNombres(p.getNombres());
+                car.setDescripcion(p.getDescripcion());
+                car.setPrecioCompra(p.getPrecio());
+                car.setCantidad(cantidad);
+                car.setSubTotal(cantidad*p.getPrecio());
+                listaCarrito.add(car);
+                request.setAttribute("contador", listaCarrito.size());
+                request.getRequestDispatcher("Controlador?accion=home").forward(request, response);
+                break;
+             case "Carrito":
+                totalPagar=0;
+                request.setAttribute("carrito", listaCarrito);
+                for(int i = 0; i < listaCarrito.size(); i++){
+                    totalPagar=totalPagar+listaCarrito.get(i).getSubTotal();
+                }
+                request.setAttribute("totalPagar", totalPagar);
+                request.getRequestDispatcher("carrito.jsp").forward(request, response);
                 break;
             default:
             request.setAttribute("productos", productos);
