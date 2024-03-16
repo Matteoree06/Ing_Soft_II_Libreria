@@ -5,32 +5,30 @@
  */
 
 $(document).ready(function () {
-    $("tr #btnDelete").click(function (){
-       var idp=$(this).parent().find("#idp").val();
+    $("tr #deleteItem").click(function (e) {
+        e.preventDefault();
+        var idp = $(this).parent().find('#item2').val();        
         swal({
-            title: "¿Estas Seguro?",
-            text: "Una vez eliminado, no podrás recuperar este registro!",
+            title: "Esta Seguro de Eliminar?",
+            text: "Una una Vez Eliminado, Debera Agregar de Nuevo!",
             icon: "warning",
             buttons: true,
-            dangerMode: true,
-        })
-                .then((willDelete) => {
-                    eliminar(idp);
+            dangerMode: true
+        }).then((willDelete) => {
+            if (willDelete) {
+                eliminar(idp);
+                swal(" ¡Oh! ¡Registro Borrado! ", {
+                    icon: "success",
+                }).then((willDelete) => {
                     if (willDelete) {
-                        swal("Registro Eliminado", {
-                            icon: "success",
-                        });
-                    } else {
-                        swal("Registro no Eliminado!");
-                    }
-                }).then((willDelete)=>{
-                    if(willDelete){
-                        parent.location.href="Controlador?accion=Carrito";
+                        parent.location.href = "Controlador?accion=carrito";
                     }
                 });
+            }
+        });
     });
     function eliminar(idp){
-        var url="Controlador?accion=Delete";
+        var url = "Controlador?accion=Delete&id=" + idp;
         $.ajax({
             type: 'POST',
             url: url,

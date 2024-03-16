@@ -5,6 +5,7 @@
  */
 package Aplicacion;
 
+import DAO.ClienteDAO;
 import DAO.CompraDAO;
 import Datos.Carrito;
 import Datos.Producto;
@@ -20,6 +21,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -27,11 +29,15 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class Controlador extends HttpServlet {
 
+    Cliente cl = new Cliente();
+    ClienteDAO cldao = new ClienteDAO();
     ProductoDAO pdao=new ProductoDAO();
     Producto p=new Producto();
     List<Producto> productos=new ArrayList();
     
     List<Carrito> listaCarrito=new ArrayList();
+    String logueo = "Iniciar Sesion";
+    String correo = "Iniciar Sesion";
     int item;
     double totalPagar=0.0;
     int cantidad=1;
@@ -40,8 +46,11 @@ public class Controlador extends HttpServlet {
     Carrito car;
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String accion=request.getParameter("accion");
+        HttpSession session = request.getSession();
+        session.setAttribute("logueo", logueo);
+        session.setAttribute("correo", correo);
         productos=pdao.listar();
+        String accion=request.getParameter("accion");
         switch(accion){
             case "Comprar":
                 totalPagar=0.0;
@@ -110,13 +119,14 @@ public class Controlador extends HttpServlet {
                 request.getRequestDispatcher("Controlador?accion=home").forward(request, response);
                 break;
             case "Delete":
-                int idproducto = Integer.parseInt(request.getParameter("idp"));
-                for (int i = 0; i < listaCarrito.size(); i++) {
-                    if (listaCarrito.get(i).getIdProducto() == idproducto) {
-                        listaCarrito.remove(i);
+                idp= Integer.parseInt(request.getParameter("id"));
+                if (listaCarrito != null) {
+                    for (int j = 0; j < listaCarrito.size(); j++) {
+                        if (listaCarrito.get(j).getIdProducto() == idp) {
+                            listaCarrito.remove(j);
+                        }
                     }
                 }
-                request.getRequestDispatcher("Controlador?accion=Carrito").forward(request, response);
                 break;
             case "ActualizarCantidad":
                 int idpro=Integer.parseInt(request.getParameter("idp"));
@@ -137,6 +147,30 @@ public class Controlador extends HttpServlet {
                 }
                 request.setAttribute("totalPagar", totalPagar);
                 request.getRequestDispatcher("carrito.jsp").forward(request, response);
+                break;
+             case "Validar":
+                String email = request.getParameter("txtemail");
+                String pass = request.getParameter("txtpass");
+                cl = cldao.Validar(email, pass);
+                if (cl.getId() != 0) {
+                    logueo = cl.getNombres();
+                    correo = cl.getEmail();
+                }
+                request.getRequestDispatcher("Controlador?accion=carrito").forward(request, response);
+                break;
+            case "Registrar":
+                String nom = request.getParameter("txtnom");
+                String dni = request.getParameter("txtdni");
+                String em = request.getParameter("txtemail");
+                String pas = request.getParameter("txtpass");
+                String dir = request.getParameter("txtdire");
+                cl.setNombres(nom);
+                cl.setDni(dni);
+                cl.setEmail(em);
+                cl.setPass(pas);
+                cl.setDireccion(dir);
+                cldao.AgregarCliente(cl);
+                request.getRequestDispatcher("Controlador?accion=carrito").forward(request, response);
                 break;
              case "GenerarCompra":
                  Cliente cliente=new Cliente();
