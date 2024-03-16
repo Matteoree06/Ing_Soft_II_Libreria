@@ -10,72 +10,72 @@ package Datos;
  * @author mateo
  */
 public class Cliente {
-    private int id;
-    private String dni;
-    private String nombre;
-    private String direccion;
-    private String correo;
-    private String password;
+    int id;
+    String dni;
+    String Nombres;
+    String email;
+    String pass;
+    String direccion;
 
     public Cliente() {
     }
 
-    public Cliente(int id, String dni, String nombre, String direccion, String correo, String password) {
+    public Cliente(int id, String dni, String Nombres, String email, String pass, String direccion) {
         this.id = id;
         this.dni = dni;
-        this.nombre = nombre;
+        this.Nombres = Nombres;
+        this.email = email;
+        this.pass = pass;
         this.direccion = direccion;
-        this.correo = correo;
-        this.password = password;
     }
 
     public int getId() {
         return id;
     }
 
-    public String getDni() {
-        return dni;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public String getDireccion() {
-        return direccion;
-    }
-
-    public String getCorreo() {
-        return correo;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getDni() {
+        return dni;
     }
 
     public void setDni(String dni) {
         this.dni = dni;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public String getNombres() {
+        return Nombres;
+    }
+
+    public void setNombres(String Nombres) {
+        this.Nombres = Nombres;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPass() {
+        return pass;
+    }
+
+    public void setPass(String pass) {
+        this.pass = pass;
+    }
+
+    public String getDireccion() {
+        return direccion;
     }
 
     public void setDireccion(String direccion) {
         this.direccion = direccion;
     }
-
-    public void setCorreo(String correo) {
-        this.correo = correo;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
+    
     
 }
